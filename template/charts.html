@@ -1,0 +1,76 @@
+<html>
+  <head>
+      <link rel="stylesheet" href="styles.css">
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript" src="stages.js"></script>
+      <script type="text/javascript" src="dream.js"></script>
+      <script type="text/javascript" src="pos.js"></script>
+      <script type="text/javascript" src="activity.js"></script>
+      <script type="text/javascript" src="hr.js"></script> 
+      <script type="text/javascript" src="hr-var.js"></script>
+      <script type="text/javascript" src="hr-var-trend.js"></script>
+      <script type="text/javascript">
+      </script>
+  </head>
+
+  <body>
+    <div class="wrapper"></div>
+      <!--Position-->
+      <div class="container">
+        <div id="bottom-1" class="box"></div>
+        <div id="mid-1" class="box stack-top"></div>
+        <div id="top-pos" class="box stack-top"></div>
+      </div>
+
+      <!--Activity-->
+      <div class="container">
+        <div id="bottom-2" class="box"></div>
+        <div id="mid-2" class="box stack-top"></div>
+        <div id="top-act" class="box stack-top"></div>
+      </div>
+
+      <div class="container">
+        <div id="bottom-3" class="box"></div>
+        <div id="mid-3" class="box stack-top"></div>
+        <div id="top-hr" class="box stack-top"></div>
+      </div>
+
+      <div class="container">
+        <div id="bottom-4" class="box"></div>
+        <div id="mid-4" class="box stack-top"></div>
+        <div id="top-hr-var" class="box stack-top"></div>
+      </div>
+
+      <div class="container">
+        <div id="bottom-5" class="box"></div>
+        <div id="mid-5" class="box stack-top"></div>
+        <div id="top-hr-var-trend" class="box stack-top"></div>
+      </div>
+    </div>  
+
+    <!-- Images  to use for area chart gradients -->
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+      <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffd700" />
+        <stop offset="50%" stop-color="#bc9e0a" />
+        <stop offset="100%" stop-color="#c2a309" />
+      </linearGradient>
+      <linearGradient id="coral-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ff7f50" />
+        <stop offset="50%" stop-color="#e0531f" />
+        <stop offset="100%" stop-color="#aa3d14" />
+      </linearGradient>
+      <linearGradient id="cornflower-blue-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#6495ed" />
+        <stop offset="50%" stop-color="#4e71b0" />
+        <stop offset="100%" stop-color="#3e5a8e" />
+      </linearGradient>
+      <linearGradient id="darkblue-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#00008b" />
+        <stop offset="50%" stop-color="#042869" />
+        <stop offset="100%" stop-color="#001b4c" />
+      </linearGradient>
+    </svg>
+  </body>
+</html>

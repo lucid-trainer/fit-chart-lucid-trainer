@@ -1,0 +1,42 @@
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'time');
+      data.addColumn('number', 'hr');
+
+      data.addRows([
+{hrData}
+    ]);
+
+      var options = {
+        'width': 1400,
+        'height': 200,
+        hAxis: {
+          title: 'Time',
+          gridlines: {
+            color: 'transparent'
+          },
+          format: 'HH:mm',
+        },
+        vAxis: {
+          title: 'Heart Rate Variability',
+          gridlines: {
+            color: 'transparent'
+          },
+          viewWindow: {
+            min: 0,
+            max: 5
+          }
+        },
+        backgroundColor: 'transparent',
+        colors: ['white'],
+        legend: {position: 'none'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('top-hr-var'));
+
+      chart.draw(data, options);
+    }

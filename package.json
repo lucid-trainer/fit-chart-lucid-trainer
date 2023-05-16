@@ -1,0 +1,12 @@
+{
+  "name": "fit-chart-batch",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-charts": "node build-stages && node build-dream && node build-pos && node build-act && node build-hr && node build-hr-var && node build-hr-var-trend" 
+  },
+  "author": "",
+  "license": "MIT"
+  
+}

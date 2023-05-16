@@ -1,0 +1,43 @@
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'time');
+      data.addColumn('number', 'x');
+      data.addColumn('number', 'y');
+      data.addColumn('number', 'z');
+
+      data.addRows([
+{posData}
+      ]);
+
+      var options = {
+        'width': 1400,
+        'height': 200,
+        hAxis: {
+          title: 'Time',
+          gridlines: {
+            color: 'transparent'
+          },
+          format: 'HH:mm',
+        },
+        vAxis: {
+          title: 'Position',
+          gridlines: {
+            color: 'transparent'
+          },
+          viewWindow: {
+            min: -10,
+            max: 10
+          }
+        },
+        backgroundColor: 'transparent',
+        colors: ['#D7BDE2', '#A3E4D7', '#F7DC6F']
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('top-pos'));
+
+      chart.draw(data, options);
+    }
