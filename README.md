@@ -1,6 +1,6 @@
 # Charting For Fitbit Lucid Trainer
 
-A collection of node.js scripts to create charts displaying the activity and heart rate data recorded by [Fitbit Lucid Trainer](https://github.com/lucid-trainer/fit-lucid-trainer). That app calculates several features based on the accelerometer and heart rate sensors: position, relative movement, heart rate, and heart rate variability. This last feature is not the ECG-based measurement of time between heart beats, but the standard deviation between absolute differences in heart rate value in each measurement that occurs every 10th of a second).
+A collection of node.js scripts to create charts displaying the activity and heart rate data recorded by [Fitbit Lucid Trainer](https://github.com/lucid-trainer/fit-lucid-trainer). That app calculates several features based on the accelerometer and heart rate sensors: position, relative movement, heart rate, and heart rate variability. This last feature is not the ECG-based measurement of time between heart beats, but the standard deviation between absolute differences in heart rate value in each measurement that occurs once per second.
 
 # Getting Started
 
