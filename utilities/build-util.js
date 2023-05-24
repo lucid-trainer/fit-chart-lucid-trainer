@@ -55,6 +55,36 @@ const getFitbitData = () => {
   return trimFitbitData;
 }
 
+const getDreamData = () => {
+  //get the data from the app
+  const dream_file_data = getFitbitData();
+
+  let prevIdx = 0;
+
+  //loop through and combine consecutive values that are really one dream report
+  for (const [i, value] of dream_file_data.entries()) {
+    if(value["event"]) {
+      let timestamp = value.timestamp;
+      let dreamEvent = value.event;
+      if(prevIdx > 0 && i < prevIdx + 3) {
+        //combine the entries
+        let prevDreamEvent = dream_file_data[prevIdx].event;
+        let prevLen = prevDreamEvent.split(".")[1];
+        let len =  dreamEvent.split(".")[1];
+        prevLen = Number(prevLen) + Number(len);
+        prevLen = prevLen > 5 ? 5 : prevLen;
+        
+        dream_file_data[prevIdx].event = "dream." + prevLen;
+        delete dream_file_data[i].event;
+      } else {
+        prevIdx = i;
+      }
+    }
+  }
+
+  return dream_file_data;
+}
+
 const sortByTimestamp = (a, b) => {
   return a.timestamp.localeCompare(b.timestamp);
 }
@@ -133,6 +163,7 @@ return results;
 module.exports = {
   getSleepData,
   getFitbitData,
+  getDreamData,
   smoothSpikes,
   getMovingAverages
  }

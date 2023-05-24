@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const { readFileSync, rmSync, writeFileSync } = require('fs');
-const { getFitbitData }= require("./utilities/build-util");
+const { getDreamData }= require("./utilities/build-util");
 const ROOT_DIR = ".";
 
 //get the fitbit data
-const dream_file_data = getFitbitData();
+const dream_file_data = getDreamData();
 
 //convert it to chart data
 let dir = "";
