@@ -5,11 +5,14 @@ function drawBasic() {
 
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
-      data.addColumn('number', 'hr');
+      data.addColumn('number', 'hrv');
 
       data.addRows([
 {hrData}
     ]);
+
+      var date_formatter = new google.visualization.DateFormat({ pattern: "HH:mm"}); 
+      date_formatter.format(data, 0);  // Where 0 is the index of the column
 
       var options = {
         'width': 1400,
