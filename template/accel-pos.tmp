@@ -27,7 +27,7 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Position',
+          title: 'Accel Position',
           gridlines: {
             color: 'transparent'
           },
@@ -40,7 +40,7 @@ function drawBasic() {
         colors: ['#D7BDE2', '#A3E4D7', '#F7DC6F']
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-pos'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-accel-pos'));
 
       chart.draw(data, options);
     }

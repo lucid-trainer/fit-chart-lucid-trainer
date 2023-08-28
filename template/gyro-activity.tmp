@@ -25,13 +25,13 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Activity',
+          title: 'Gyro Activity',
           gridlines: {
             color: 'transparent'
           },
           viewWindow: {
             min: 0,
-            max: 5
+            max: 1
           }
         },
         backgroundColor: 'transparent',
@@ -39,7 +39,7 @@ function drawBasic() {
         legend: {position: 'none'}
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-act'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-gyro-act'));
 
       chart.draw(data, options);
     }

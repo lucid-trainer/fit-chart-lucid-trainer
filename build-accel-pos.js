@@ -12,9 +12,11 @@ let dir = "";
 let posData = [];
 
 for (const [i, value] of pos_file_data.entries()) {
-  let fieldValue = value.positionArray;
-  let row = '[new Date("' + value.timestamp + '"), ' + fieldValue[1].x + ',' + 
-    fieldValue[1].y + ',' + fieldValue[1].z + '],';
+  let accelX = value.accelx.split(",").pop();
+  let accelY = value.accely.split(",").pop();
+  let accelZ = value.accelz.split(",").pop();
+  let row = '[new Date("' + value.timestamp + '"), ' + accelX + ', ' + 
+    accelY + ', ' + accelZ + '],';
 
   if (i === pos_file_data.length - 1) {
     //this is the last row, so get the dir name
@@ -25,7 +27,7 @@ for (const [i, value] of pos_file_data.entries()) {
 }
 
 //insert the chart data into the template
-const fileData = readFileSync(require.resolve("./template/pos.tmp"), { encoding: "utf8" });
+const fileData = readFileSync(require.resolve("./template/accel-pos.tmp"), { encoding: "utf8" });
 const fileDataArray = fileData.split("\n");
 
 let index = -1;
@@ -38,10 +40,10 @@ for (const [i, value] of fileDataArray.entries()) {
 fileDataArray.splice(index, 1);
 
 //write out the js file for the sleep stages chart
-rmSync(dir + "/pos.js", {
+rmSync(dir + "/accel-pos.js", {
   force: true,
 });
 
 fileDataArray.splice(index, 0, ...posData); // insert data into the array
 const newFileData = fileDataArray.join("\n"); // create the new file
-writeFileSync(dir + "/pos.js", newFileData, { encoding: "utf8" }); // save it
+writeFileSync(dir + "/accel-pos.js", newFileData, { encoding: "utf8" }); // save it

@@ -89,81 +89,8 @@ const sortByTimestamp = (a, b) => {
   return a.timestamp.localeCompare(b.timestamp);
 }
 
-/* 
- * Smooths out spikes in target field based on existence of one if reference field (for example looks 
- * for sharp spikes in movement and smooths corresponding spikes in hr var field) and then performs a general
- * partial smoothing of any other spikes in reference field data
-*/
-const smoothSpikes = (data, referenceField, targetField, maxRefSize, minTargetSize, maxTargetSize) => {
-  let spikeIndexes = [];
-
-  //go through the data identify all the referenceField spikes
-  for (let i = 3; i < data.length-3; i++) {
-    //grab four entries at a time
-    const intervalSlice = data.slice(i, i + 4);
-    //we're looking for one or two at most consecutive spikes
-    if(intervalSlice[1][referenceField] > maxRefSize && 
-      intervalSlice[0][referenceField] <= maxRefSize && 
-      (intervalSlice[2][referenceField] <= maxRefSize || 
-        intervalSlice[3][referenceField] <= maxRefSize)) {
-        spikeIndexes.push(i);
-    }
-  }
-
-  //now got through the data again and smooth matching targetField values 
-  //around the reference field spike
-  for(const [k, indexVal] of spikeIndexes.entries()) {
-    for (let i = 0; i < 5; i++) {
-      if(data[indexVal+i] && data[indexVal+i][targetField]) {
-        let currVal = Number(data[indexVal+i][targetField]);
-        let newVal = currVal > minTargetSize ? currVal*.15 : minTargetSize;
-        data[indexVal+i][targetField] = newVal.toString();
-      }  
-    }
-  }
-
-  //one more pass, just partially smooth any remaining spikes in the reference field
-  //above the maxTargetSize threshold
-  for ( const [k, entry] of data.entries()) {
-    if (entry[targetField] > maxTargetSize) {
-      let newVal = Number(entry[targetField])*.5;
-      entry[targetField] = newVal.toString();
-    }
-  } 
-
-}
-
-/*
-* Gets moving averages for data on field and interval
-*/
-const getMovingAverages = (data, field, interval) => {
-let index = interval - 1;
-const length = data.length + 1;
-let results = [];
-
-while (index < length) {
-  index = index + 1;
-  const intervalSlice = data.slice(index - interval, index);
-  const vals = intervalSlice.map( reading => Number(reading[field]));
-  const valsMean = mean(vals);
-  const valsDev = sd(vals);
-
-  results.push(
-    {
-      timestamp: intervalSlice[0].timestamp,
-      movingAvg: valsMean,
-      movingDev: valsDev
-    }
-  );
-}
-
-return results;
-}
-
 module.exports = {
   getSleepData,
   getFitbitData,
-  getDreamData,
-  smoothSpikes,
-  getMovingAverages
+  getDreamData
  }
