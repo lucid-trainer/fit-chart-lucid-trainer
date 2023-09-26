@@ -18,9 +18,12 @@ let endDateTime = undefined;
 
 //now build the rest of the blocks 
 for (const [i, value] of dream_file_data.entries()) {
-  if(value["event"]) {
-    let eventArray = value.event.split(".");
-    let len = eventArray[1];
+  if(value["event"] && value["event"].includes("dream")) {
+    let eventArray = value.event.split(";");
+    const dreamEvent = eventArray.find(event => event.includes("dream"));
+    let dreamEventArray = dreamEvent.split(".");
+
+    let len = dreamEventArray[1];
 
     let startDateTime = new Date(value.timestamp);
     startDateTime= new Date(startDateTime.getTime() - 
