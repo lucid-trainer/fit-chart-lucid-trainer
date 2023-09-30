@@ -63,7 +63,7 @@ const getDreamData = () => {
 
   //loop through and combine consecutive values that are really one dream report
   for (const [i, value] of dream_file_data.entries()) {
-    if(value["event"]) {
+    if(value["event"] && value["event"].includes("dream")) {
       let timestamp = value.timestamp;
       let dreamEvent = value.event;
       if(prevIdx > 0 && i < prevIdx + 3) {
