@@ -1,0 +1,45 @@
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'time');
+      data.addColumn('number', 'activity');
+
+      data.addRows([
+{activityData}
+      ]);
+
+      var date_formatter = new google.visualization.DateFormat({ pattern: "HH:mm"}); 
+      date_formatter.format(data, 0);  // Where 0 is the index of the column
+
+      var options = {
+        'width': 1400,
+        'height': 200,
+        hAxis: {
+          title: 'Time',
+          gridlines: {
+            color: 'transparent'
+          },
+          format: 'HH:mm',
+        },
+        vAxis: {
+          title: 'Activity',
+          gridlines: {
+            color: 'transparent'
+          },
+          viewWindow: {
+            min: 0,
+            max: 5
+          }
+        },
+        backgroundColor: 'transparent',
+        colors: ['white'],
+        legend: {position: 'none'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('top-accel-act'));
+
+      chart.draw(data, options);
+    }

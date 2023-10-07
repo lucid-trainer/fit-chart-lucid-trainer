@@ -65,7 +65,7 @@ function drawArea() {
 
  
     // Instantiate and draw our charts, passing in some options.
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 6; i++) {
         var elementId = "bottom-"+i;
         var container = document.getElementById(elementId);
         var chart = new google.visualization.ComboChart(container);

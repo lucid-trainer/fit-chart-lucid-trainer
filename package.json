@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-charts": "node build-stages && node build-dream && node build-pos && node build-act && node build-hr && node build-hr-var && node build-hr-var-trend" 
+    "build-charts": "node build-stages && node build-dream && node build-accel-pos && node build-accel-act && node build-gyro-act && node build-hr && node build-hr-var" 
   },
   "author": "",
   "license": "MIT"

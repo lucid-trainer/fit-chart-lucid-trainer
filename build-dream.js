@@ -18,14 +18,19 @@ let endDateTime = undefined;
 
 //now build the rest of the blocks 
 for (const [i, value] of dream_file_data.entries()) {
-  if(value["event"]) {
-    let eventArray = value.event.split(".");
-    let len = eventArray[1];
+  if(value["event"] && value["event"].includes("dream")) {
+    let eventArray = value.event.split(";");
+    const dreamEvent = eventArray.find(event => event.includes("dream"));
+    let dreamEventArray = dreamEvent.split(".");
 
+    let len = dreamEventArray[1];
+    
     let startDateTime = new Date(value.timestamp);
     startDateTime= new Date(startDateTime.getTime() - 
        (startDateTime.getTimezoneOffset() * 60000) - (len*5*60000) - (2*60000)); //push the time back in time based on clicks
          //to account for perceived length of dream and add two minutes for wakeup/reporting delay
+    
+    //console.log("startDateTime=" + startDateTime.toJSON())     
     let startDateTimeStr = startDateTime.toJSON().slice(0,-1);
 
     //finish the last transparent block
