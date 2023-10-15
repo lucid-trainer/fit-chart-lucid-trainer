@@ -5,8 +5,8 @@ function drawBasic() {
 
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
-      data.addColumn('number', 'mean');
-      data.addColumn('number', 'std dev');
+      data.addColumn('number', 'hrv');
+
       data.addRows([
 {hrData}
     ]);
@@ -31,12 +31,13 @@ function drawBasic() {
           },
           viewWindow: {
             min: 0,
-            max: 5
+            max: 2
           },
           textPosition: 'out'
         },
         backgroundColor: 'transparent',
-        colors: ['#D7BDE2', '#A3E4D7']
+        colors: ['white'],
+        legend: {position: 'none'}
       };
 
       var chart = new google.visualization.LineChart(document.getElementById('top-hr-var-trend'));

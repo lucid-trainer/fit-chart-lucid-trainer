@@ -1,5 +1,3 @@
-const { mean, sd }= require("./math-util");
-
 const sleep_stage_data = require("../staging/fit-sleep-stage.json");
 
 const fit_data = require("../staging/fit-data.json");
