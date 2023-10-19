@@ -5,10 +5,10 @@ function drawBasic() {
 
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
-      data.addColumn('number', 'hrv');
+      data.addColumn('number', 'cp');
 
       data.addRows([
-{hrData}
+{cpData}
     ]);
 
       var date_formatter = new google.visualization.DateFormat({ pattern: "HH:mm"}); 
@@ -25,13 +25,13 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Heart Rate Variability Trends',
+          title: 'Clock Proxy',
           gridlines: {
             color: 'transparent'
           },
           viewWindow: {
             min: 0,
-            max: 2
+            max: 1.2
           },
           textPosition: 'out'
         },
@@ -40,7 +40,7 @@ function drawBasic() {
         legend: {position: 'none'}
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-hr-var-trend'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-clock-proxy'));
 
       chart.draw(data, options);
     }
