@@ -5,10 +5,10 @@ function drawBasic() {
 
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
-      data.addColumn('number', 'cp');
+      data.addColumn('number', 'nr3');
 
       data.addRows([
-{cpData}
+{nrem3Data}
     ]);
 
       var date_formatter = new google.visualization.DateFormat({ pattern: "HH:mm"}); 
@@ -25,7 +25,7 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Clock Proxy',
+          title: 'NRem3 Probability',
           gridlines: {
             color: 'transparent'
           },
@@ -40,7 +40,7 @@ function drawBasic() {
         legend: {position: 'none'}
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-clock-proxy'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-nrem3'));
 
       chart.draw(data, options);
     }
