@@ -12,7 +12,7 @@ let dir = "";
 let actData = [];
 
 for (const [i, value] of act_file_data.entries()) {
-  let fieldValue = value.move;
+  let fieldValue = value.moveZ;
   let row = '[new Date("' + value.timestamp + '"), ' + fieldValue +'],';
 
   if (i === act_file_data.length - 1) {

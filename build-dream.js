@@ -18,7 +18,7 @@ let endDateTime = undefined;
 
 //now build the rest of the blocks 
 for (const [i, value] of dream_file_data.entries()) {
-  if(value["event"]) {
+  if(value["event"]  && value["event"].includes("dream")) {
     let eventArray = value.event.split(".");
     let len = eventArray[1];
 

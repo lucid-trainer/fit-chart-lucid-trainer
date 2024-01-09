@@ -25,13 +25,13 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Activity',
+          title: 'Activity Z-Axis',
           gridlines: {
             color: 'transparent'
           },
           viewWindow: {
             min: 0,
-            max: 5
+            max: 2
           }
         },
         backgroundColor: 'transparent',
