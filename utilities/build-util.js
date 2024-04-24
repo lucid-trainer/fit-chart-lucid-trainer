@@ -4,6 +4,8 @@ const sleep_stage_data = require("../staging/fit-sleep-stage.json");
 
 const fit_data = require("../staging/fit-data.json");
 
+const app_data = require("../staging/fit-app-data.json")
+
 const getSleepData = () => sleep_stage_data;
 
 /*
@@ -78,16 +80,45 @@ const getDreamData = () => {
       } else {
         prevIdx = i;
       }
-    } else {
-      dream_file_data
     }
   }
 
-  //just return dream events
-  // return dream_file_data.filter(
-  //   value => value["event"] && value["event"].includes("dream"));
   return dream_file_data;
+}  
+
+const getAppData = () => {
+  //get the data from the app
+
+  let trimAppData = [];
+
+  let [first, last] = getSleepStageFirstLast();
+  let firstDateTime = new Date(first);
+  let lastDateTime = new Date(last); 
+
+  for (const [i, value] of app_data.entries()) {
+    let dateTime = new Date(value.readingTimestamp);
+  
+    if( dateTime >= firstDateTime && dateTime <= lastDateTime) {
+      trimAppData.push(value);
+    }
+  }
+
+
+  //round out the start and end elements if needed
+  if(new Date(trimAppData[0].timestamp) > firstDateTime) {
+    let dummyFirst = {readingTimestamp : first};
+    trimAppData.unshift(dummyFirst);    
+  }
+
+  let len = trimAppData.length;
+  if(new Date(trimAppData[len-1].timestamp) < lastDateTime) {
+    let dummyLast = {readingTimestamp : last};
+    trimAppData.push(dummyLast);   
+  }
+
+  return trimAppData;
 }
+
 
 const sortByTimestamp = (a, b) => {
   return a.timestamp.localeCompare(b.timestamp);
@@ -149,7 +180,9 @@ while (index < length) {
   index = index + 1;
   const intervalSlice = data.slice(index - interval, index);
   const vals = intervalSlice.map( reading => Number(reading[field]));
+
   const valsMean = mean(vals);
+
   const valsDev = sd(vals);
 
   results.push(
@@ -167,6 +200,7 @@ return results;
 module.exports = {
   getSleepData,
   getFitbitData,
+  getAppData,
   getDreamData,
   smoothSpikes,
   getMovingAverages

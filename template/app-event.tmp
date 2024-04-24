@@ -1,8 +1,9 @@
 google.charts.load("current", {"packages":["corechart"]});
 google.charts.setOnLoadCallback(drawArea);
 
-const transparent = "area { opacity: 0.0 }";
-const dream = "area { color: #32de84 }";
+const awake = "area { color: #FFAC1C }";
+const lightp = "area { color: #5D3FD3 }";
+const remp = "area { color: #4ADEDE }";
 
 function drawArea() {
     var data = new google.visualization.DataTable();
@@ -10,14 +11,14 @@ function drawArea() {
     data.addColumn('number', 'stage');
     data.addColumn({type: 'string', role: 'style'});
     data.addRows([
-{dreamData}
+{appEventData}
     ]);
 
     // Set chart options
     var options = {
         width: 1400,
         height: 200,
-        areaOpacity: .5,
+        areaOpacity: .8,
         lineWidth: 0,
         seriesType: 'area',
         backgroundColor: 'transparent',
@@ -46,5 +47,5 @@ function drawArea() {
         var container = document.getElementById(elementId);
         var chart = new google.visualization.ComboChart(container);
         chart.draw(data, options);    
-    }
+    }   
 }

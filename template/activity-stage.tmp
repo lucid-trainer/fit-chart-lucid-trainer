@@ -5,11 +5,11 @@ function drawBasic() {
 
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
-      data.addColumn('number', 'mean');
-      data.addColumn('number', 'std dev');
+      data.addColumn('number', 'activity');
+
       data.addRows([
-{hrData}
-    ]);
+{activityStageData}
+      ]);
 
       var date_formatter = new google.visualization.DateFormat({ pattern: "HH:mm"}); 
       date_formatter.format(data, 0);  // Where 0 is the index of the column
@@ -25,21 +25,21 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Heart Rate Variability Trends',
+          title: 'Stage by Activity',
           gridlines: {
             color: 'transparent'
           },
           viewWindow: {
-            min: 50,
-            max: 90
-          },
-          textPosition: 'out'
+            min: 0,
+            max: 5
+          }
         },
         backgroundColor: 'transparent',
-        colors: ['#D7BDE2', '#A3E4D7']
+        colors: ['white'],
+        legend: {position: 'none'}
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-hr-var-trend'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-act-stage'));
 
       chart.draw(data, options);
     }

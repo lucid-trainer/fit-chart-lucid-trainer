@@ -15,11 +15,11 @@ const minMoveSize = .1;
 const minHrVarSize = .5;
 const maxHrVarSize = 2;
 
-let fieldName = "hrVar";
+let fieldName = "hr";
 let moveFieldName = "move";
 
-smoothSpikes(orig_hr_file_data, moveFieldName, fieldName, minMoveSize, minHrVarSize, maxHrVarSize );
-const hrvar_trend_data = getMovingAverages(orig_hr_file_data, fieldName, 10);
+//smoothSpikes(orig_hr_file_data, moveFieldName, fieldName, minMoveSize, minHrVarSize, maxHrVarSize );
+const hrvar_trend_data = getMovingAverages(orig_hr_file_data, fieldName, 40);
 
 for (const [i, value] of hrvar_trend_data.entries()) {
   let row = '[new Date("' + value.timestamp + '"),' + value.movingAvg + 
