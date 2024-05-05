@@ -14,46 +14,39 @@ let actData = [];
 let moveData = [];
 let heartData = [];
 
-  // return dream_file_data.filter(
-  //   value => value["event"] && value["event"].includes("dream"));
 
 for (const [i, value] of act_file_data.entries()) {
   moveData.push(value.moveZ);
   heartData.push(value.hr)
   
-  
   let stageLvl = 4.75;
-  if(moveData.length >= 8) {
-    let activeCnt = moveData.slice(-4).filter(it => it > .2).length;
-    let unkCnt = moveData.slice(-4).filter(it => it >= .09).length;
+  if(moveData.length >= 10) {
+    let highActiveCnt = moveData.slice(-5).filter(it => it > .325).length;
+    let activeCnt = moveData.slice(-5).filter(it => it > .2).length;
+    let restCnt = moveData.slice(-4).filter(it => it > .1).length;
     let deepCnt = moveData.slice(-4).filter(it => it > .01).length;
-    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it < .09).length;
+    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .1).length;
 
-    //let prevHeartCntMn =  mean(heartData.slice(-10, -5))
-    //let heartCntMn = mean(heartData.slice(-5))
-    //console.log("heartdata=" + mean(heartData.slice(-10, -5).map(i => Number(i))))
-    //console.log("prev=" + prevHeartCntMn + "heart=" + heartCntMn)
-    const valsMean = Math.round(mean(heartData.slice(-20, -10).map(i => Number(i))));
+    const avgHeartRate = Math.round(mean(heartData.slice(-20, -10).map(i => Number(i))));
     let recentMove = moveData.slice(-10).filter(it => it > .02).length;
-    //let prevHeartCnt = heartData.slice(-10, -5).filter(it => it < 60).length;
-    //let heartCnt = heartData.slice(-5).filter(it => it > 60).length;
-    let prevHeartCnt = heartData.slice(-10, -5).filter(it => it <= valsMean).length;
-    let heartCnt = heartData.slice(-5).filter(it => it > valsMean+1).length;
+    let recentActive = moveData.slice(-12).filter(it => it > .2).length;
+    let prevHeartCnt = heartData.slice(-10, -5).filter(it => it <= avgHeartRate).length;
+    let heartCnt = heartData.slice(-5).filter(it => it > avgHeartRate+1).length;
 
-    if(activeCnt >= 2) {
+    if(highActiveCnt >= 1 && activeCnt >= 2 && heartCnt >=2) {
       stageLvl = 4.75 //awake
-    } else if(unkCnt >= 1) {
-      stageLvl = 4 //unknown, might be waking
-    } else if(recentMove == 0 && prevHeartCnt >=3 && heartCnt >= 3) {
+    } else if(restCnt >= 1) {
+      stageLvl = 4 //restless, might be waking
+    } else if(recentActive == 0 && prevHeartCnt >= 2 && heartCnt >= 3) {
         stageLvl = 3.5 //rem candidate
     } else if (deepCnt === 0 && lightCnt === 0) {
       // console.log("time = " + value.timestamp + ", prev=" + heartData.slice(-8, -4).filter(it => it < 60) + " heart=" +
       // heartData.slice(-4).filter(it => it > 61))
         stageLvl = 1.5 //deep asleep 
-    } else if (deepCnt > 0 && lightCnt === 0) {
+    } else if ((deepCnt > 0 && lightCnt === 0) || recentMove > 1) {
         stageLvl = 2.0 //asleep
     } else {
-        stageLvl = 3 //light, restless
+        stageLvl = 2.5 //light, restless
     }
   } 
 
@@ -61,8 +54,8 @@ for (const [i, value] of act_file_data.entries()) {
     //this is the last row, so get the dir name
     dir =  ROOT_DIR + "/staging/" + value.timestamp.split('T')[0];
   }
-
-  let row = '[new Date("' + value.timestamp + '"), ' + stageLvl +'],';
+  
+  let row = '[new Date("' + value.timestamp + '"), ' + stageLvl + '],';
   actData.push(row);
 }
 

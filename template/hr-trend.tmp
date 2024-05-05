@@ -6,7 +6,6 @@ function drawBasic() {
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'time');
       data.addColumn('number', 'mean');
-      data.addColumn('number', 'std dev');
       data.addRows([
 {hrData}
     ]);
@@ -25,7 +24,7 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Heart Rate Variability Trends',
+          title: 'Heart Rate Moving Average',
           gridlines: {
             color: 'transparent'
           },
@@ -39,7 +38,7 @@ function drawBasic() {
         colors: ['#D7BDE2', '#A3E4D7']
       };
 
-      var chart = new google.visualization.LineChart(document.getElementById('top-hr-var-trend'));
+      var chart = new google.visualization.LineChart(document.getElementById('top-hr-trend'));
 
       chart.draw(data, options);
     }

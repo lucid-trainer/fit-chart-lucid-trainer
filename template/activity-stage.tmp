@@ -25,7 +25,7 @@ function drawBasic() {
           format: 'HH:mm',
         },
         vAxis: {
-          title: 'Stage by Activity',
+          title: 'Sleep Stage Estimate',
           gridlines: {
             color: 'transparent'
           },
