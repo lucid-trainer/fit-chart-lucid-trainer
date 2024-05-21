@@ -23,12 +23,12 @@ for (const [i, value] of act_file_data.entries()) {
   if(moveData.length >= 10) {
     let highActiveCnt = moveData.slice(-5).filter(it => it > .325).length;
     let activeCnt = moveData.slice(-5).filter(it => it > .2).length;
-    let restCnt = moveData.slice(-4).filter(it => it > .1).length;
+    let restCnt = moveData.slice(-4).filter(it => it > .15).length;
     let deepCnt = moveData.slice(-4).filter(it => it > .01).length;
-    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .1).length;
+    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .15).length;
 
     const avgHeartRate = Math.round(mean(heartData.slice(-20, -10).map(i => Number(i))));
-    let recentMove = moveData.slice(-10).filter(it => it > .02).length;
+    let recentMove = moveData.slice(-8).filter(it => it > .02).length;
     let recentActive = moveData.slice(-12).filter(it => it > .2).length;
     let prevHeartCnt = heartData.slice(-10, -5).filter(it => it <= avgHeartRate).length;
     let heartCnt = heartData.slice(-5).filter(it => it > avgHeartRate+1).length;
