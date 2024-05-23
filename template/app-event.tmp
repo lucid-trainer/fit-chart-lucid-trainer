@@ -2,8 +2,12 @@ google.charts.load("current", {"packages":["corechart"]});
 google.charts.setOnLoadCallback(drawArea);
 
 const awake = "area { color: #FFAC1C }";
-const lightp = "area { color: #5D3FD3 }";
-const remp = "area { color: #4ADEDE }";
+const lightp = "area { color: #5D3FD3 ; opacity: 0.5 }";
+const remp0 = "area { color: #4AB9DE ; opacity: 0.25 }";
+const remp1 = "area { color: #4AC5DE ; opacity: 0.4 }";
+const remp2 = "area { color: #4ADED2 ; opacity: 0.6 }";
+const remp3 = "area { color: #4ADEC5 ; opacity: 0.75 }";
+const remp4 = "area { color: #4ADEB9 ; opacity: 1 }";
 
 function drawArea() {
     var data = new google.visualization.DataTable();

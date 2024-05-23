@@ -29,8 +29,11 @@ for (const [i, value] of app_file_data.entries()) {
     }
 
     if (value["eventType"].includes("rem")) {
+      let intensity = value["intensity"];
+      if (intensity === 5) intensity = 4;
+
       len = 2;
-      style = "remp";
+      style = "remp" + intensity;
     }
 
     let startDateTime = new Date(value.readingTimestamp);

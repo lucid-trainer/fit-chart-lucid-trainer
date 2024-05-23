@@ -23,25 +23,26 @@ for (const [i, value] of act_file_data.entries()) {
   if(moveData.length >= 10) {
     let highActiveCnt = moveData.slice(-5).filter(it => it > .325).length;
     let activeCnt = moveData.slice(-5).filter(it => it > .2).length;
-    let restCnt = moveData.slice(-4).filter(it => it > .15).length;
+    let restCnt = moveData.slice(-4).filter(it => it > .06).length;
     let deepCnt = moveData.slice(-4).filter(it => it > .01).length;
-    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .15).length;
+    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .06).length;
 
-    const avgHeartRate = Math.round(mean(heartData.slice(-20, -10).map(i => Number(i))));
-    let recentMove = moveData.slice(-8).filter(it => it > .02).length;
-    let recentActive = moveData.slice(-12).filter(it => it > .2).length;
-    let prevHeartCnt = heartData.slice(-10, -5).filter(it => it <= avgHeartRate).length;
-    let heartCnt = heartData.slice(-5).filter(it => it > avgHeartRate+1).length;
+    const avgHeartRate = mean(heartData.slice(-15, -5).map(i => Number(i)));
+    let recentMove = moveData.slice(-10).filter(it => it > .06).length;
+    let recentHr = heartData.slice(-5);
 
-    if(highActiveCnt >= 1 && activeCnt >= 2 && heartCnt >=2) {
+    let stepHrIncrease = recentHr.filter(it => it > avgHeartRate+1.25).length >= 2 &&
+      recentHr.filter(it => it > avgHeartRate+2.25).length >= 1 
+
+    // console.log("time = " + value.timestamp + ", avg=" + avgHeartRate + " recentMove=" + recentMove + 
+
+    if(highActiveCnt >= 1 && activeCnt >= 2 && stepHrIncrease) {
       stageLvl = 4.75 //awake
     } else if(restCnt >= 1) {
       stageLvl = 4 //restless, might be waking
-    } else if(recentActive == 0 && prevHeartCnt >= 2 && heartCnt >= 3) {
+    } else if(recentMove == 0 && (stepHrIncrease)){
         stageLvl = 3.5 //rem candidate
     } else if (deepCnt === 0 && lightCnt === 0) {
-      // console.log("time = " + value.timestamp + ", prev=" + heartData.slice(-8, -4).filter(it => it < 60) + " heart=" +
-      // heartData.slice(-4).filter(it => it > 61))
         stageLvl = 1.5 //deep asleep 
     } else if ((deepCnt > 0 && lightCnt === 0) || recentMove > 1) {
         stageLvl = 2.0 //asleep
@@ -62,6 +63,7 @@ for (const [i, value] of act_file_data.entries()) {
 //insert the chart data into the template
 const fileData = readFileSync(require.resolve("./template/activity-stage.tmp"), { encoding: "utf8" });
 const fileDataArray = fileData.split("\n");
+
 
 let index = -1;
 
