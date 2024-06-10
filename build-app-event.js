@@ -23,21 +23,27 @@ for (const [i, value] of app_file_data.entries()) {
     let len = 4;
     let style = "awake";
 
+    let intensity = value["intensity"];
+    if (intensity === 5) intensity = 4;
+
     if (value["eventType"].includes("light")) {
       len = 2;
-      style = "lightp";
+      style = "lightp" + intensity;
     }
 
     if (value["eventType"].includes("rem")) {
-      let intensity = value["intensity"];
-      if (intensity === 5) intensity = 4;
-
       len = 2;
       style = "remp" + intensity;
     }
 
+    if (value["eventType"].includes("follow_up")) {
+      len = 2;
+      style = "followp" + intensity;
+    }
+
+
     let startDateTime = new Date(value.readingTimestamp);
-      startDateTime= new Date(startDateTime.getTime() - (startDateTime.getTimezoneOffset() * 60000))
+    startDateTime= new Date(startDateTime.getTime() - (startDateTime.getTimezoneOffset() * 60000))
    //      (startDateTime.getTimezoneOffset() * 60000) - (len*60000)); //push the time back depending on len
     let startDateTimeStr = startDateTime.toJSON().slice(0,-1);
 
@@ -67,7 +73,7 @@ for (const [i, value] of app_file_data.entries()) {
     //add the end of the last transparent block
     let lastDateTime = new Date(app_file_data.at(-1).readingTimestamp);
     lastDateTime= new Date(lastDateTime.getTime() - (lastDateTime.getTimezoneOffset() * 60000));
-
+    
     if(lastDateTime < endDateTime) {
       //the last app event was close enough to the end that we can just treat it as the end
       appData.splice(-1)

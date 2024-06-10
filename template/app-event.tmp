@@ -2,12 +2,24 @@ google.charts.load("current", {"packages":["corechart"]});
 google.charts.setOnLoadCallback(drawArea);
 
 const awake = "area { color: #FFAC1C }";
-const lightp = "area { color: #5D3FD3 ; opacity: 0.5 }";
-const remp0 = "area { color: #4AB9DE ; opacity: 0.25 }";
-const remp1 = "area { color: #4AC5DE ; opacity: 0.4 }";
-const remp2 = "area { color: #4ADED2 ; opacity: 0.6 }";
-const remp3 = "area { color: #4ADEC5 ; opacity: 0.75 }";
-const remp4 = "area { color: #4ADEB9 ; opacity: 1 }";
+
+const lightp0 = "area { color: #823FD3 ; opacity: 0.4 }";
+const lightp1 = "area { color: #693FD3 ; opacity: 0.55 }";
+const lightp2 = "area { color: #513FD3 ; opacity: 0.75 }";
+const lightp3 = "area { color: #443FD3 ; opacity: 0.80 }";
+const lightp4 = "area { color: #443FD3 ; opacity: 1 }";
+
+const remp0 = "area { color: #4AB9DE ; opacity: 0.35 }";
+const remp1 = "area { color: #4AC5DE ; opacity: 0.5 }";
+const remp2 = "area { color: #4ADED2 ; opacity: 0.7 }";
+const remp3 = "area { color: #4ADEC5 ; opacity: 0.80 }";
+const remp4 = "area { color: #4ADEC5 ; opacity: 1 }";
+
+const followp0 = "area { color: #F7DC6F ; opacity: 0.4 }";
+const followp1 = "area { color: #F7DC6F ; opacity: 0.55 }";
+const followp2 = "area { color: #F7DC6F ; opacity: 0.70 }";
+const followp3 = "area { color: #F7DC6F ; opacity: 0.80 }";
+const followp4 = "area { color: #F7DC6F ; opacity: 1 }";
 
 function drawArea() {
     var data = new google.visualization.DataTable();

@@ -105,13 +105,13 @@ const getAppData = () => {
 
 
   //round out the start and end elements if needed
-  if(new Date(trimAppData[0].timestamp) > firstDateTime) {
+  if(new Date(trimAppData[0].readingTimestamp) > firstDateTime) {
     let dummyFirst = {readingTimestamp : first};
     trimAppData.unshift(dummyFirst);    
   }
 
   let len = trimAppData.length;
-  if(new Date(trimAppData[len-1].timestamp) < lastDateTime) {
+  if(new Date(trimAppData[len-1].readingTimestamp) < lastDateTime) {
     let dummyLast = {readingTimestamp : last};
     trimAppData.push(dummyLast);   
   }

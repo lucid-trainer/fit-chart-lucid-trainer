@@ -13,26 +13,42 @@ let dir = "";
 let actData = [];
 let moveData = [];
 let heartData = [];
+let heartVarData = [];
 
 
 for (const [i, value] of act_file_data.entries()) {
   moveData.push(value.moveZ);
   heartData.push(value.hr)
+  heartVarData.push(value.hrVar)
   
   let stageLvl = 4.75;
-  if(moveData.length >= 10) {
+  if(moveData.length >= 15) {
     let highActiveCnt = moveData.slice(-5).filter(it => it > .325).length;
     let activeCnt = moveData.slice(-5).filter(it => it > .2).length;
-    let restCnt = moveData.slice(-4).filter(it => it > .06).length;
+    let restCnt = moveData.slice(-4).filter(it => it > .11).length;
     let deepCnt = moveData.slice(-4).filter(it => it > .01).length;
-    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .06).length;
+    let lightCnt = moveData.slice(-4).filter(it => it > .02 && it <= .11).length;
+    
+    let recentMove = moveData.slice(-10).filter(it => it > .11).length;
+    let extendedDeepCnt = moveData.slice(-36).filter(it => it > .02).length;
 
+    //hr trigger
     const avgHeartRate = mean(heartData.slice(-15, -5).map(i => Number(i)));
-    let recentMove = moveData.slice(-10).filter(it => it > .06).length;
     let recentHr = heartData.slice(-5);
-
     let stepHrIncrease = recentHr.filter(it => it > avgHeartRate+1.25).length >= 2 &&
-      recentHr.filter(it => it > avgHeartRate+2.25).length >= 1 
+      recentHr.filter(it => it > avgHeartRate+2.25).length >= 1 && extendedDeepCnt > 0
+
+    //hrVar trigger
+    const avgHeartVRRate = mean(heartVarData.slice(-15, -5).map(i => Number(i)));
+    let recentHrVar = heartVarData.slice(-5);
+    //let notCurrentMove = moveData.slice(-1) <= .02;
+    let currentMove = moveData.slice(-4).filter(it => it > .05).length 
+    let stepHrVarIncrease = currentMove == 0  && extendedDeepCnt > 0 && 
+       ( recentHrVar.filter(it => it > avgHeartVRRate + .35).length >= 2 || 
+         recentHrVar.filter(it => it > avgHeartVRRate + .7).length >= 1)
+    
+    let jumpHrVarIncrease = currentMove == 0 && recentHrVar.filter(it => it > avgHeartVRRate + 1).length >= 1
+
 
     // console.log("time = " + value.timestamp + ", avg=" + avgHeartRate + " recentMove=" + recentMove + 
 
@@ -40,7 +56,7 @@ for (const [i, value] of act_file_data.entries()) {
       stageLvl = 4.75 //awake
     } else if(restCnt >= 1) {
       stageLvl = 4 //restless, might be waking
-    } else if(recentMove == 0 && (stepHrIncrease)){
+    } else if(recentMove == 0 && (stepHrIncrease || stepHrVarIncrease || jumpHrVarIncrease)) {
         stageLvl = 3.5 //rem candidate
     } else if (deepCnt === 0 && lightCnt === 0) {
         stageLvl = 1.5 //deep asleep 
