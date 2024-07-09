@@ -8,7 +8,7 @@ Install the latest [node.js](https://nodejs.org/en/download/). Clone the reposit
 
 From the command line or within an IDE like Visual Studio Code run the command "npm run build-charts". A new directory should be created with a name matching the date of the data files. Open the charts.html to view.
 
-Each chart on the page shows the sleep stages (dark blue for deep, light blue for light, gold for rem and red for awake). The green bars represent dream events reported by the user (with a length of 5-25 minutes specified). The data from one sensor reading is then presented over both. An example charts page is shown below and more examples are available [here](https://lucid-trainer.github.io/).
+Each chart on the page shows the sleep stages (dark blue for deep, light blue for light, gold for rem and red for awake). The thin colored bars show playing of sound routines (orange) and REM event prompts (green for REM, gold for fill-in/follow-up, purple for light activity). The data from one sensor reading, or calculation of REM detection model is then presented over both. An example charts page is shown below and more examples are available [here](https://lucid-trainer.github.io/).
 
 ![Screenshot](sample/sample_chart.png)
 
