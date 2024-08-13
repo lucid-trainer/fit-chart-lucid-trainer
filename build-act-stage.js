@@ -35,17 +35,17 @@ for (const [i, value] of act_file_data.entries()) {
     //hr trigger
     const avgHeartRate = mean(heartData.slice(-15, -5).map(i => Number(i)));
     let recentHr = heartData.slice(-5);
-    let stepHrIncrease = recentHr.filter(it => it > avgHeartRate+1.25).length >= 2 &&
-      recentHr.filter(it => it > avgHeartRate+2.25).length >= 1 && extendedDeepCnt > 0
+    let stepHrIncrease = recentHr.filter(it => it > avgHeartRate+1).length >= 2 &&
+      recentHr.filter(it => it > avgHeartRate+2).length >= 1 && extendedDeepCnt > 0
 
     //hrVar trigger
     const avgHeartVRRate = mean(heartVarData.slice(-15, -5).map(i => Number(i)));
     let recentHrVar = heartVarData.slice(-5);
     //let notCurrentMove = moveData.slice(-1) <= .02;
     let currentMove = moveData.slice(-4).filter(it => it > .05).length 
-    let stepHrVarIncrease = currentMove == 0  && extendedDeepCnt > 0 && 
-       ( recentHrVar.filter(it => it > avgHeartVRRate + .35).length >= 2 || 
-         recentHrVar.filter(it => it > avgHeartVRRate + .7).length >= 1)
+    let stepHrVarIncrease = currentMove == 0  && ((extendedDeepCnt > 0 && 
+        recentHrVar.filter(it => it > avgHeartVRRate + .25).length >= 2) || 
+         recentHrVar.filter(it => it > avgHeartVRRate + .5).length >= 1)
     
     let jumpHrVarIncrease = currentMove == 0 && recentHrVar.filter(it => it > avgHeartVRRate + 1).length >= 1
 
