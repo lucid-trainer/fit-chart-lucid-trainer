@@ -15,11 +15,16 @@ let moveData = [];
 let heartData = [];
 let heartVarData = [];
 
+let stepHrVal = 2.75
+let stepHrVarLow = .45
+let stepHrVarHigh = .75
 
 for (const [i, value] of act_file_data.entries()) {
   moveData.push(value.moveZ);
   heartData.push(value.hr)
   heartVarData.push(value.hrVar)
+
+  setRemDetectValues(value.timestamp);
   
   let stageLvl = 4.75;
   if(moveData.length >= 15) {
@@ -36,7 +41,7 @@ for (const [i, value] of act_file_data.entries()) {
     const avgHeartRate = mean(heartData.slice(-15, -5).map(i => Number(i)));
     let recentHr = heartData.slice(-5);
     let stepHrIncrease = recentHr.filter(it => it > avgHeartRate+1).length >= 2 &&
-      recentHr.filter(it => it > avgHeartRate+2).length >= 1 && extendedDeepCnt > 0
+      recentHr.filter(it => it > avgHeartRate+stepHrVal).length >= 1 && extendedDeepCnt > 0
 
     //hrVar trigger
     const avgHeartVRRate = mean(heartVarData.slice(-15, -5).map(i => Number(i)));
@@ -44,11 +49,8 @@ for (const [i, value] of act_file_data.entries()) {
     //let notCurrentMove = moveData.slice(-1) <= .02;
     let currentMove = moveData.slice(-4).filter(it => it > .05).length 
     let stepHrVarIncrease = currentMove == 0  && ((extendedDeepCnt > 0 && 
-        recentHrVar.filter(it => it > avgHeartVRRate + .25).length >= 2) || 
-         recentHrVar.filter(it => it > avgHeartVRRate + .5).length >= 1)
-    
-    let jumpHrVarIncrease = currentMove == 0 && recentHrVar.filter(it => it > avgHeartVRRate + 1).length >= 1
-
+        recentHrVar.filter(it => it > avgHeartVRRate + stepHrVarLow).length >= 2) || 
+         recentHrVar.filter(it => it > avgHeartVRRate + stepHrVarHigh).length >= 1)
 
     // console.log("time = " + value.timestamp + ", avg=" + avgHeartRate + " recentMove=" + recentMove + 
 
@@ -56,7 +58,7 @@ for (const [i, value] of act_file_data.entries()) {
       stageLvl = 4.75 //awake
     } else if(restCnt >= 1) {
       stageLvl = 4 //restless, might be waking
-    } else if(recentMove == 0 && (stepHrIncrease || stepHrVarIncrease || jumpHrVarIncrease)) {
+    } else if(recentMove == 0 && (stepHrIncrease || stepHrVarIncrease)) {
         stageLvl = 3.5 //rem candidate
     } else if (deepCnt === 0 && lightCnt === 0) {
         stageLvl = 1.5 //deep asleep 
@@ -98,3 +100,23 @@ rmSync(dir + "/activity-stage.js", {
 fileDataArray.splice(index, 0, ...actData); // insert data into the array
 const newFileData = fileDataArray.join("\n"); // create the new file
 writeFileSync(dir + "/activity-stage.js", newFileData, { encoding: "utf8" }); // save it
+
+function setRemDetectValues(timestamp) {
+  currDateTime = new Date(timestamp);
+  currHour = currDateTime.getHours();
+
+  if (currHour >= 2 && currHour < 4) {
+    stepHrVal = 2.25;
+    stepHrVarLow = .35;
+    stepHrVarHigh = .65
+  } else if (currHour == 4 || currHour == 5) {
+    stepHrVal = 1.75;
+    stepHrVarLow = .25;
+    stepHrVarHigh = .45
+  } else if (currHour >= 6 && currHour <= 9) {
+    stepHrVal = 2.5;
+    stepHrVarLow = .4;
+    stepHrVarHigh = .7;
+  } 
+}
+
